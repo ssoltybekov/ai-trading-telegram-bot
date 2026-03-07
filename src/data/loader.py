@@ -8,8 +8,10 @@ def load_dataset(ticker: str, period: str = "10y") -> pd.DataFrame:
     if df.empty:
         raise ValueError(f"Данные для тикера '{ticker}' не найдены")
     
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
+
     df.dropna(inplace=True)
-    
 
     return df
 
